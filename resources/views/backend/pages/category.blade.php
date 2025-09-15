@@ -24,7 +24,7 @@
                             <div class="col-md-5">
                                 <label for="room_type_id" class="form-label">Select Room Type*</label>
                                 <select class="form-select" name="room_type_id" id="room_type_id" required>
-                                    <option value="">Choose Type</option>
+                                    <option value=""> </option>
                                     @foreach($data['room_types'] as $room_type)
                                         <option value="{{ $room_type->id }}">{{ $room_type->room_type_name }}</option>
                                     @endforeach

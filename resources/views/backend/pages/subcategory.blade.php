@@ -24,7 +24,7 @@
                             <div class="col-md-5">
                                 <label for="room_type_id" class="form-label">Select Room Type*</label>
                                 <select class="form-select" name="room_type_id" id="room_type_id" required>
-                                    <option value="">Choose Type</option>
+                                    <option value=""> </option>
                                     @foreach($data['room_types'] as $room_type)
                                         <option value="{{ $room_type->id }}">{{ $room_type->room_type_name }}</option>
                                     @endforeach
@@ -34,7 +34,7 @@
                             <div class="col-md-5">
                                 <label for="category_id" class="form-label">Select Category*</label>
                                 <select class="form-select" name="category_id" id="category_id" required>
-                                    <option value="">Choose Category</option>
+                                    <option value=""> </option>
                                     @foreach($data['categories'] as $category)
                                         <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                     @endforeach
@@ -123,7 +123,7 @@
                                                 <div class="col-md-5">
                                                     <label for="room_type_id{{ $subcategory->id }}" class="form-label">Select Room Type*</label>
                                                     <select class="form-select" name="room_type_id" id="room_type_id{{ $subcategory->id }}" required>
-                                                        <option value="">Choose Type</option>
+                                                        <option value=""> </option>
                                                         @foreach($data['room_types'] as $room_type)
                                                             <option value="{{ $room_type->id }}" 
                                                                 {{ $subcategory->category && $subcategory->category->room_type_id == $room_type->id ? 'selected' : '' }}>
@@ -136,7 +136,7 @@
                                                 <div class="col-md-5">
                                                     <label for="category_id{{ $subcategory->id }}" class="form-label">Select Category*</label>
                                                     <select class="form-select" name="category_id" id="category_id{{ $subcategory->id }}" required>
-                                                        <option value="">Choose Category</option>
+                                                        <option value=""> </option>
                                                         @foreach($data['categories'] as $category)
                                                             <option value="{{ $category->id }}"
                                                                 {{ $subcategory->category_id == $category->id ? 'selected' : '' }}>
