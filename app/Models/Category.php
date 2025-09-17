@@ -14,6 +14,11 @@ class Category extends Model
 
     public function room_type()
     {
-        return $this->belongsTo(RoomType::class, 'room_type_id');
+        return $this->belongsTo(RoomType::class);
     }
+    public function subcategories()
+    {
+        return $this->hasMany(Subcategory::class);
+    }
+
 }

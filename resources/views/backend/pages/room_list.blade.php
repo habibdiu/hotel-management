@@ -55,8 +55,9 @@
                                             </td>
 
                                             <td>
-                                                {{$single_room->room_type }}
+                                                {{$single_room->roomType->room_type_name ?? 'n/a'}}
                                             </td>
+
                                             <td>
                                                 <x-readmore-modal 
                                                     :id="'roomAmenities' . $single_room->id"

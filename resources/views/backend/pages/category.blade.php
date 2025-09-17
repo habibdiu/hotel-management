@@ -79,7 +79,7 @@
                                     <td>{{ $data['categories']->firstItem() + $index }}</td>
                                     <td>{{ $category->room_type ? $category->room_type->room_type_name : '-' }}</td>
                                     <td>{{ $category->category_name }}</td>
-                                    <td>{{ $category->created_at->format('d-m-Y') }}</td>
+                                    <td>{{ $category->created_at->format('d-m-Y H:i:s') }}</td>
                                     <td>
                                     
                                         <a href="{{ route('admin.room.category.update', $category->id) }}" class="btn btn-success btn-icon" data-bs-toggle="modal" data-bs-target="#roomCategoryEditModal{{ $category->id }}">

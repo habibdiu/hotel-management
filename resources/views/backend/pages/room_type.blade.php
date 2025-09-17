@@ -66,7 +66,7 @@
                                 <tr class="text-center">
                                     <td>{{ $data['room_types']->firstItem() + $index }}</td>
                                     <td>{{ $room_type->room_type_name }}</td>
-                                    <td>{{ $room_type->created_at->format('d-m-Y') }}</td>
+                                    <td>{{ $room_type->created_at->format('d-m-Y H:i:s') }}</td>
                                     <td>
                                     
                                         <a href="{{ route('admin.room.type.update', $room_type->id) }}" class="btn btn-success btn-icon" data-bs-toggle="modal" data-bs-target="#roomTypeEditModal{{ $room_type->id }}">

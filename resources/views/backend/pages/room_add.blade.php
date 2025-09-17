@@ -33,14 +33,35 @@
                                         </div>
 
                                         <div class="col-md-6 mb-4">
-                                            <label for="" class="form-label">Room Type*</label>
-                                            <Select class="form-select" name="room_type" id="" required>
-                                                <option value="">---Select---</option>
-                                                <option value="single">Single</option>
-                                                <option value="double">Double</option>
-                                                <option value="suite">Suite</option>
-                                                <option value="deluxe">Deluxe</option>
-                                            </Select>
+                                            <label class="form-label">Room Type / Category / Subcategory*</label>
+                                            <select name="subcategory_id" id="room_hierarchy" class="form-control">
+                                                <option value="">Select</option>
+                                                @foreach ($data['roomTypes'] as $room_type)
+                                                    @if(!$room_type->categories || $room_type->categories->isEmpty())
+                                                        <option value="roomtype_{{ $room_type->id }}" data-full="{{ $room_type->room_type_name }}">
+                                                            {{ $room_type->room_type_name }}
+                                                        </option>
+                                                    @else
+                                                        <optgroup label="{{ $room_type->room_type_name }}">
+                                                            @foreach($room_type->categories as $category)
+                                                                @if(!$category->subcategories || $category->subcategories->isEmpty())
+                                                                    <option value="category_{{ $category->id }}" data-full="{{ $room_type->room_type_name }} / {{ $category->category_name }}">
+                                                                        &nbsp;&nbsp;{{ $category->category_name }}
+                                                                    </option>
+                                                                @else
+                                                                    <optgroup label="{!! '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— '.$category->category_name !!}">
+                                                                        @foreach($category->subcategories as $subcategory)
+                                                                            <option value="{{ $subcategory->id }}" data-full="{{ $room_type->room_type_name }} / {{ $category->category_name }} / {{ $subcategory->name }}">
+                                                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $subcategory->name }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </optgroup>
+                                                                @endif
+                                                            @endforeach
+                                                        </optgroup>
+                                                    @endif
+                                                @endforeach
+                                            </select>
                                         </div>
 
                                         <div class="col-md-6 mb-4">
@@ -90,26 +111,37 @@
     </div>
 @endsection
 
-@push('js')
-    <script>
-        function image_upload() {
 
+@push('js')
+<script>
+    $(document).ready(function(){
+
+        // Image upload preview
+        window.image_upload = function() {
             $('#imgPreview').trigger('click');
         }
 
-        function readpicture(input, preview_id) {
-
+        window.readpicture = function(input, preview_id) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
-
                 reader.onload = function(e) {
-                    $(preview_id)
-                        .attr('src', e.target.result);
+                    $(preview_id).attr('src', e.target.result);
                 };
-
                 reader.readAsDataURL(input.files[0]);
             }
-
         }
-    </script>
+
+    });
+</script>
+<script>
+    const select = document.getElementById('room_hierarchy');
+
+    select.addEventListener('change', function() {
+        const selectedOption = select.options[select.selectedIndex];
+        if (selectedOption.value !== "") {
+            // Update the visible text in the select to the full path
+            selectedOption.text = selectedOption.getAttribute('data-full');
+        }
+    });
+</script>
 @endpush

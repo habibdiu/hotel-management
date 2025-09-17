@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use PDOException;
 use App\Models\Room;
+use App\Models\RoomType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -53,6 +54,9 @@ class RoomController extends Controller implements HasMiddleware
 
         $data['active_menu'] = 'room_add';
         $data['page_title'] = 'Room Add';
+
+        $data['roomTypes'] = RoomType::with('categories.subcategories')->get();
+        
         return view('backend.pages.room_add', compact('data'));
     }
 
@@ -118,11 +122,12 @@ public function room_edit(Request $request, $id)
     public function room_list()
     {
         $data = [];
-        $data['room_list'] = DB::table('rooms')->get()->all();
+        $data['room_list'] = Room::with(['roomType', 'category', 'subcategory'])->get();
         $data['active_menu'] = 'room_list';
         $data['page_title'] = 'Room List';
         return view('backend.pages.room_list', compact('data'));
     }
+
 
     public function room_delete($id)
     {
